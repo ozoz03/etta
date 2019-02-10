@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity() {
 
     var score = 0
+    var theLast = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,19 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        buttonAddToScore.setOnClickListener{
-            score += Integer.parseInt(editUserScore.text.toString())
+        buttonAddToScore.setOnClickListener {
+            val newScore = Integer.parseInt(editUserScore.text.toString())
+            if (newScore > 0) {
+                theLast = newScore
+                score += newScore
+                viewUserScore.text = "" + score
+                editUserScore.text = null
+            }
+        }
+
+        buttonUndoTheLast.setOnClickListener {
+            score -= theLast
+            theLast = 0
             viewUserScore.text = "" + score
             editUserScore.text = null
         }
