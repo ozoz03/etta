@@ -28,12 +28,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
         val scoreRepository = ScoreRepository()
+
+        // load user dialog
         AlertDialog.Builder(this)
                     .setTitle("Loading the previous result")
                     .setMessage("Do you really want to load results of previous game?")
@@ -117,6 +120,7 @@ class MainActivity : AppCompatActivity() {
             newButton.setOnClickListener {
                 makeMyUserActive(newButton)
             }
+            newButton.updateText()
             buttonList.add(newButton)
             val lp = ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT)
             userGridLayout.addView(newButton, lp)
