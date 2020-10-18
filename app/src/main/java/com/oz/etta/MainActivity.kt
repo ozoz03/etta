@@ -2,20 +2,22 @@ package com.oz.etta
 
 import android.app.ActionBar
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.view.*
-
+import android.view.Menu
+import android.view.MenuItem
+import android.view.ViewGroup
+import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import android.widget.Toast
-import android.content.DialogInterface
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var myCountDownTimer: MyCountDownTimer
     val ACTIVE_BUTTON_COLOR = Color.GREEN
     val INACTIVE_BUTTON_COLOR = Color.GRAY
 
@@ -102,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                     changeLayoutState(addNewUserLayout, enabled = false)
                     changeLayoutState(addScoreLayout, enabled = true)
                     userIterator = buttonList.iterator()
+                    myCountDownTimer = MyCountDownTimer(timeProgressBar, 60000, 1000)
                     getNextUser()
 
                     // set focus to edit score
@@ -162,6 +165,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateEditForm() {
         textViewUserName.setText(currentUserButton!!.user.toString())
+        // run timer
+        timeProgressBar.setProgress(600)
+        myCountDownTimer.start()
     }
 
     private fun changeLayoutState(layout: ViewGroup, enabled: Boolean) {
